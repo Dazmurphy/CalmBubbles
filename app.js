@@ -15,12 +15,13 @@ function triggerVibrationIndicator() {
 
 function startVibration() {
   const interval = parseInt(document.getElementById('vibration-interval').value, 10) * 1000;
+  const duration = parseInt(document.getElementById('vibration-duration').value, 10);
   if (vibrationIntervalId) clearInterval(vibrationIntervalId);
   if (navigator.vibrate) {
-    navigator.vibrate(200);
+    navigator.vibrate(duration);
     triggerVibrationIndicator();
     vibrationIntervalId = setInterval(() => {
-      navigator.vibrate(200);
+      navigator.vibrate(duration);
       triggerVibrationIndicator();
     }, interval);
   } else {

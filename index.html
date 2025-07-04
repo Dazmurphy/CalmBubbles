@@ -11,13 +11,18 @@
     <header>
   <h1>CalmBubbles</h1>
       <p>Calm your mind with gentle vibrations and bubble popping.</p>
+      <nav style="margin-top: 0.5rem;">
+        <a href="box-breathing.html" style="color: #4f8a8b; text-decoration: underline; font-size: 1.1rem;">Try Box Breathing 4x4 →</a>
+      </nav>
     </header>
     <main>
       <section id="bubble-area"></section>
       <section id="controls">
         <div id="vibration-indicator" aria-hidden="true"></div>
-        <label for="vibration-interval">Vibration Interval (seconds):</label>
-        <input type="number" id="vibration-interval" min="1" max="60" value="5" />
+  <label for="vibration-interval">Vibration Interval (seconds):</label>
+  <input type="number" id="vibration-interval" min="1" max="60" value="5" />
+  <label for="vibration-duration">Vibration Duration (ms):</label>
+  <input type="number" id="vibration-duration" min="10" max="2000" value="200" />
         <button id="start-vibration">Start Vibration</button>
         <button id="stop-vibration">Stop Vibration</button>
       </section>
