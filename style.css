@@ -1,0 +1,237 @@
+#vibration-indicator {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, #b2f0e6 60%, #e0c3fc 100%);
+  box-shadow: 0 0 0 0 rgba(79, 138, 139, 0.18);
+  opacity: 0.7;
+  pointer-events: none;
+  position: relative;
+  transition: box-shadow 0.2s, opacity 0.2s;
+}
+
+#vibration-indicator.pulse {
+  animation: vibration-pulse 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes vibration-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 138, 139, 0.18);
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  60% {
+    box-shadow: 0 0 0 16px rgba(79, 138, 139, 0.10);
+    opacity: 0.9;
+    transform: scale(1.12);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(79, 138, 139, 0.0);
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #b2f0e6 0%, #e0c3fc 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#app {
+  width: 100vw;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  color: #3a6073;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: #4f8a8b;
+  font-size: 1.1rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#bubble-area {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  background: rgba(255,255,255,0.3);
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(58,96,115,0.08);
+}
+
+
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--bubble-main, #e0c3fc) 60%, var(--bubble-accent, #b2f0e6) 100%, #f8ffae 120%);
+  box-shadow:
+    0 4px 24px 4px rgba(176, 224, 230, 0.25),
+    0 2px 8px rgba(58,96,115,0.12),
+    0 0 0 2px rgba(255,255,255,0.18) inset;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.3s, filter 0.2s;
+  animation: bubble-float 5s linear forwards, bubble-pulse 2.5s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  overflow: hidden;
+}
+
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: 18%;
+  top: 16%;
+  width: 38%;
+  height: 32%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 100%);
+  border-radius: 50%;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: shimmer 2.2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.2; }
+  50% { opacity: 0.35; }
+  100% { opacity: 0.2; }
+}
+
+@keyframes bubble-pulse {
+  0%, 100% { filter: brightness(1) blur(0.2px); }
+  50% { filter: brightness(1.08) blur(0.7px); }
+}
+
+.bubble:active {
+  transform: scale(0.92);
+  filter: brightness(1.1);
+}
+
+.bubble:active {
+  transform: scale(0.92);
+  filter: brightness(1.1);
+}
+
+.bubble.pop {
+  animation: bubble-pop 0.35s cubic-bezier(0.4,0,0.2,1) forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes bubble-float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-40px) scale(1.08);
+    opacity: 0.7;
+  }
+}
+
+@keyframes bubble-pop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  60% {
+    transform: scale(1.18);
+    opacity: 0.7;
+    filter: blur(1px);
+  }
+  100% {
+    transform: scale(0.7);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+#controls label {
+  color: #3a6073;
+  font-size: 1rem;
+}
+
+#controls input {
+  width: 80px;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: 1px solid #b2f0e6;
+  font-size: 1rem;
+  text-align: center;
+}
+
+#controls button {
+  background: #4f8a8b;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#controls button:hover {
+  background: #3a6073;
+}
+
+@media (max-width: 600px) {
+  #app {
+    max-width: 100vw;
+  }
+  #bubble-area {
+    height: 50vh;
+  }
+}

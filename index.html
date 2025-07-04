@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CalmBubbles</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+  <h1>CalmBubbles</h1>
+      <p>Calm your mind with gentle vibrations and bubble popping.</p>
+    </header>
+    <main>
+      <section id="bubble-area"></section>
+      <section id="controls">
+        <div id="vibration-indicator" aria-hidden="true"></div>
+        <label for="vibration-interval">Vibration Interval (seconds):</label>
+        <input type="number" id="vibration-interval" min="1" max="60" value="5" />
+        <button id="start-vibration">Start Vibration</button>
+        <button id="stop-vibration">Stop Vibration</button>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
