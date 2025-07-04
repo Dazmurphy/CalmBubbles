@@ -5,59 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Box Breathing 4x4</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .box-breathing-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 80vh;
-    }
-    .box {
-      width: 120px;
-      height: 120px;
-      border: 3px solid #4f8a8b;
-      border-radius: 1.2rem;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      color: #fff;
-      background: #4f8a8b;
-      box-shadow: 0 4px 24px rgba(58,96,115,0.08);
-      transition: width 3.8s cubic-bezier(0.4,0,0.2,1), height 3.8s cubic-bezier(0.4,0,0.2,1), background 3.8s linear, color 0.3s;
-      will-change: width, height, background, color;
-    }
-    .breath-in {
-  /* Expanding, blue-green */
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, #b2f0e6 0%, #4f8a8b 100%);
-  color: #2d3a3a;
-    }
-    .hold {
-  /* Hold, pale blue */
-  /* Do not set width/height, keep box at previous size */
-  background: linear-gradient(135deg, #e0c3fc 0%, #b2f0e6 100%);
-  color: #3a6073;
-    }
-    .breath-out {
-  /* Contracting, purple */
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, #e0c3fc 0%, #3a6073 100%);
-  color: #fff;
-    }
-    .box-breathing-controls {
-      margin-top: 1.5rem;
-    }
-    .box-breathing-controls a {
-      color: #4f8a8b;
-      text-decoration: underline;
-      font-size: 1.1rem;
-    }
-  </style>
 </head>
 <body>
   <div class="box-breathing-container">
@@ -70,90 +17,9 @@
       <a href="index.html">← Back to CalmBubbles</a>
     </div>
   </div>
-  <script>
-    const box = document.getElementById('box-breathing-box');
-    const instructions = document.getElementById('box-breathing-instructions');
-    const startBtn = document.getElementById('start-box-breathing');
-    const stopBtn = document.getElementById('stop-box-breathing');
-    let phase = 0;
-    let intervalId = null;
-    const phases = [
-      { label: 'Inhale', class: 'breath-in', message: 'Breathe in slowly', duration: 4000 },
-      { label: 'Hold', class: 'hold', message: 'Hold your breath', duration: 4000 },
-      { label: 'Exhale', class: 'breath-out', message: 'Breathe out slowly', duration: 4000 },
-      { label: 'Hold', class: 'hold', message: 'Hold your breath', duration: 4000 },
-    ];
-    // Animate color blending for inhale/exhale
-    function animateBoxColor(startColor, endColor, duration) {
-      let start = null;
-      function hexToRgb(hex) {
-        hex = hex.replace('#', '');
-        if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
-        const num = parseInt(hex, 16);
-        return [num >> 16, (num >> 8) & 255, num & 255];
-      }
-      function rgbToHex([r, g, b]) {
-        return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-      }
-      const startRgb = hexToRgb(startColor);
-      const endRgb = hexToRgb(endColor);
-      function step(ts) {
-        if (!start) start = ts;
-        const progress = Math.min((ts - start) / duration, 1);
-        const current = startRgb.map((c, i) => Math.round(c + (endRgb[i] - c) * progress));
-        box.style.background = rgbToHex(current);
-        if (progress < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-
-    // Track last size phase to keep box size during hold
-    let lastSizeClass = '';
-    function nextPhase() {
-      const p = phases[phase];
-      box.textContent = p.label;
-      instructions.textContent = p.message;
-      if (p.label === 'Inhale') {
-        box.className = 'box breath-in';
-        lastSizeClass = 'breath-in';
-        animateBoxColor('#4f8a8b', '#b2f0e6', p.duration);
-      } else if (p.label === 'Exhale') {
-        box.className = 'box breath-out';
-        lastSizeClass = 'breath-out';
-        animateBoxColor('#b2f0e6', '#e0c3fc', p.duration);
-      } else if (p.label === 'Hold') {
-        // Only update color, not size
-        box.className = 'box ' + lastSizeClass;
-        if (lastSizeClass === 'breath-in') {
-          box.style.background = 'linear-gradient(135deg, #e0c3fc 0%, #b2f0e6 100%)';
-          box.style.color = '#3a6073';
-        } else {
-          box.style.background = 'linear-gradient(135deg, #e0c3fc 0%, #b2f0e6 100%)';
-          box.style.color = '#3a6073';
-        }
-      }
-      phase = (phase + 1) % phases.length;
-      intervalId = setTimeout(nextPhase, p.duration);
-    }
-    startBtn.addEventListener('click', () => {
-      startBtn.disabled = true;
-      stopBtn.disabled = false;
-      phase = 0;
-      nextPhase();
-    });
-    stopBtn.addEventListener('click', () => {
-      startBtn.disabled = false;
-      stopBtn.disabled = true;
-      clearTimeout(intervalId);
-      box.textContent = 'Ready';
-      box.className = 'box';
-      box.style.background = '';
-      box.style.color = '';
-      instructions.textContent = 'Click Start to begin box breathing (4 seconds in, 4 hold, 4 out, 4 hold).';
-    });
-  </script>
+  <script src="box-breathing.js"></script>
   <footer style="text-align:center; color:#888; font-size:0.95rem; margin-top:2rem;">
-    Version: v0.1
+    Version: v0.2
   </footer>
 </body>
 </html>

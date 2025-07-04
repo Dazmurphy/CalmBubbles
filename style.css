@@ -1,3 +1,78 @@
+/* Main navigation and footer styles */
+.main-nav {
+  margin-top: 0.5rem;
+}
+
+.nav-link {
+  color: #4f8a8b;
+  text-decoration: underline;
+  font-size: 1.1rem;
+}
+
+.main-footer {
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+}
+/* Box Breathing Styles */
+.box-breathing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.box {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #4f8a8b;
+  border-radius: 1.2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: #fff;
+  background: #4f8a8b;
+  box-shadow: 0 4px 24px rgba(58,96,115,0.08);
+  transition: width 3.8s cubic-bezier(0.4,0,0.2,1), height 3.8s cubic-bezier(0.4,0,0.2,1), background 3.8s linear, color 0.3s;
+  will-change: width, height, background, color;
+}
+
+.breath-in {
+  /* Expanding, blue-green */
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #b2f0e6 0%, #4f8a8b 100%);
+  color: #2d3a3a;
+}
+
+.hold {
+  /* Hold, pale blue */
+  /* Do not set width/height, keep box at previous size */
+  background: linear-gradient(135deg, #e0c3fc 0%, #b2f0e6 100%);
+  color: #3a6073;
+}
+
+.breath-out {
+  /* Contracting, purple */
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #e0c3fc 0%, #3a6073 100%);
+  color: #fff;
+}
+
+.box-breathing-controls {
+  margin-top: 1.5rem;
+}
+
+.box-breathing-controls a {
+  color: #4f8a8b;
+  text-decoration: underline;
+  font-size: 1.1rem;
+}
 #vibration-indicator {
   width: 36px;
   height: 36px;
