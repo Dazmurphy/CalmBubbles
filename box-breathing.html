@@ -107,16 +107,30 @@
       requestAnimationFrame(step);
     }
 
+    // Track last size phase to keep box size during hold
+    let lastSizeClass = '';
     function nextPhase() {
       const p = phases[phase];
       box.textContent = p.label;
-      box.className = 'box ' + p.class;
       instructions.textContent = p.message;
-      // Animate color for inhale/exhale
       if (p.label === 'Inhale') {
+        box.className = 'box breath-in';
+        lastSizeClass = 'breath-in';
         animateBoxColor('#4f8a8b', '#b2f0e6', p.duration);
       } else if (p.label === 'Exhale') {
+        box.className = 'box breath-out';
+        lastSizeClass = 'breath-out';
         animateBoxColor('#b2f0e6', '#e0c3fc', p.duration);
+      } else if (p.label === 'Hold') {
+        // Only update color, not size
+        box.className = 'box ' + lastSizeClass;
+        if (lastSizeClass === 'breath-in') {
+          box.style.background = 'linear-gradient(135deg, #e0c3fc 0%, #b2f0e6 100%)';
+          box.style.color = '#3a6073';
+        } else {
+          box.style.background = 'linear-gradient(135deg, #e0c3fc 0%, #b2f0e6 100%)';
+          box.style.color = '#3a6073';
+        }
       }
       phase = (phase + 1) % phases.length;
       intervalId = setTimeout(nextPhase, p.duration);
@@ -133,6 +147,8 @@
       clearTimeout(intervalId);
       box.textContent = 'Ready';
       box.className = 'box';
+      box.style.background = '';
+      box.style.color = '';
       instructions.textContent = 'Click Start to begin box breathing (4 seconds in, 4 hold, 4 out, 4 hold).';
     });
   </script>
