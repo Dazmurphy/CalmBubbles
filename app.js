@@ -42,14 +42,8 @@ function stopVibration() {
 
 // Enhanced vibration support detection
 function isVibrationSupported() {
-  // Check for API and try a test vibration (will return true on most Android, false on iOS/desktop)
-  if (!('vibrate' in navigator)) return false;
-  // Try a test vibration and see if it returns true (supported) or false (not supported)
-  try {
-    return navigator.vibrate(1) !== false;
-  } catch (e) {
-    return false;
-  }
+  // Only check for API presence, do not test vibrate (test can fail on some Androids)
+  return 'vibrate' in navigator;
 }
 
 const startBtn = document.getElementById('start-vibration');
