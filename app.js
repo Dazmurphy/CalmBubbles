@@ -38,8 +38,36 @@ function stopVibration() {
   }
 }
 
-document.getElementById('start-vibration').addEventListener('click', startVibration);
-document.getElementById('stop-vibration').addEventListener('click', stopVibration);
+
+// Enhanced vibration support detection
+function isVibrationSupported() {
+  // Check for API and try a test vibration (will return true on most Android, false on iOS/desktop)
+  if (!('vibrate' in navigator)) return false;
+  // Try a test vibration and see if it returns true (supported) or false (not supported)
+  try {
+    return navigator.vibrate(1) !== false;
+  } catch (e) {
+    return false;
+  }
+}
+
+const startBtn = document.getElementById('start-vibration');
+const stopBtn = document.getElementById('stop-vibration');
+
+if (!isVibrationSupported()) {
+  startBtn.disabled = true;
+  stopBtn.disabled = true;
+  const controls = document.getElementById('controls');
+  const msg = document.createElement('div');
+  msg.style.color = '#b00';
+  msg.style.fontSize = '1rem';
+  msg.style.marginTop = '0.5rem';
+  msg.textContent = 'Vibration is not supported on this device or browser.';
+  controls.appendChild(msg);
+} else {
+  startBtn.addEventListener('click', startVibration);
+  stopBtn.addEventListener('click', stopVibration);
+}
 
 // Bubble logic
 const bubbleArea = document.getElementById('bubble-area');
